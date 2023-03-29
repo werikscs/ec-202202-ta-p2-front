@@ -95,7 +95,7 @@ export default function validateForm(
         ...error,
         confirmPassword: {
           isValid: false,
-          message: "Confirm password é diferente de password",
+          message: "As senhas devem ser iguais",
         },
       };
     } else {

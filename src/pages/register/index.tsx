@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
-import { errorType } from './errorType';
+import { errorType } from "./errorType";
 import { registerType } from "./registerType";
+import { StyledForm, StyledMain } from "./styles";
 import validateForm from "./validateForm";
 
 export function Register({}) {
@@ -41,81 +42,77 @@ export function Register({}) {
     // RegisterUserAPI.register(formJson);
   };
 
-  const handleReset = () => {
-    setRegisterData({
-      nome: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
-    setError({
-      nome: { isValid: false, message: "" },
-      email: { isValid: false, message: "" },
-      password: { isValid: false, message: "" },
-      confirmPassword: { isValid: false, message: "" },
-    });
-  };
-
   return (
-    <div className="registro">
-      <form
+    <StyledMain>
+      <header>
+        <h1>Cadastre-se</h1>
+      </header>
+      <StyledForm
         className="form"
         onSubmit={handleSubmit}
-        onReset={handleReset}
       >
         <label htmlFor="nome">
-          nome
+          <span>Nome</span>
           <input
             type="text"
             name="nome"
             id="nome"
             data-testid="nome"
+            placeholder="Escreva um nome"
             value={registerData.nome}
             onChange={(event) => handleOnChange(event, "nome")}
           />
-          {!error.nome.isValid && <div>{error.nome.message}</div>}
+          {!error.nome.isValid && (
+            <div className="form-error">{error.nome.message}</div>
+          )}
         </label>
         <label htmlFor="email">
-          email
+          <span>Email</span>
           <input
             type="text"
             name="email"
             id="email"
             data-testid="email"
+            placeholder="Escreva um email válido"
             value={registerData.email}
             onChange={(event) => handleOnChange(event, "email")}
           />
-          {!error.email.isValid && <div>{error.email.message}</div>}
+          {!error.email.isValid && (
+            <div className="form-error">{error.email.message}</div>
+          )}
         </label>
         <label htmlFor="password">
-          password
+          <span>Senha</span>
           <input
             type="password"
             name="password"
             id="password"
             data-testid="password"
+            placeholder="Escreva uma senha"
             value={registerData.password}
             onChange={(event) => handleOnChange(event, "password")}
           />
-          {!error.password.isValid && <div>{error.password.message}</div>}
+          {!error.password.isValid && (
+            <div className="form-error">{error.password.message}</div>
+          )}
         </label>
         <label htmlFor="confirmPassword">
-          confirmPassword
+          <span>Confirmar</span>
           <input
             type="password"
             name="confirmPassword"
             id="confirmPassword"
             data-testid="confirmPassword"
+            placeholder="Escreva a mesma senha"
             value={registerData.confirmPassword}
             onChange={(event) => handleOnChange(event, "confirmPassword")}
           />
+          {!error.confirmPassword.isValid && (
+            <div className="form-error">{error.confirmPassword.message}</div>
+          )}
         </label>
-        {!error.confirmPassword.isValid && (
-          <div>{error.confirmPassword.message}</div>
-        )}
-        <button type="submit">Registrar</button>
-        <button type="reset">Reset</button>
-      </form>
-    </div>
+        <button type="submit">Cadastrar</button>
+      </StyledForm>
+    </StyledMain>
   );
 }

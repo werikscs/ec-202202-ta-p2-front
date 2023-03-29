@@ -13,6 +13,10 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Inter', sans-serif;
   }
 
+  html {
+    font-size: 24px;
+  }
+
   body{
     min-width: 360px;
     background-color: transparent;
