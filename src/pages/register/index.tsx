@@ -37,24 +37,7 @@ export function Register({ userAPI }: IProp) {
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
 
-    let auxError: formErrorType = {
-      name: {
-        isValid: false,
-        message: "",
-      },
-      email: {
-        isValid: false,
-        message: "",
-      },
-      password: {
-        isValid: false,
-        message: "",
-      },
-      confirmPassword: {
-        isValid: false,
-        message: "",
-      },
-    };
+    let auxError = error;
 
     for (const prop in formJson) {
       const updatedError = await validateForm(
@@ -68,18 +51,14 @@ export function Register({ userAPI }: IProp) {
 
     setError({ ...auxError });
 
-    let hasErrors = false;
-
     for (const prop in auxError) {
       if (!auxError[prop as keyof formErrorType].isValid) {
-        hasErrors = true;
+        return;
       }
     }
 
-    if (!hasErrors) {
-      const { name: name, email, password } = registerData;
-      await userAPI.register({ name, email, password });
-    }
+    const { name: name, email, password } = registerData;
+    await userAPI.register({ name, email, password });
   };
 
   return (
