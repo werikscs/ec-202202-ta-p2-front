@@ -57,7 +57,11 @@ export function Register({ userAPI }: IProp) {
     };
 
     for (const prop in formJson) {
-      const updatedError = validateForm(prop, formJson[prop] as string);
+      const updatedError = await validateForm(
+        prop,
+        formJson[prop] as string,
+        userAPI
+      );
       auxError = { ...auxError, [prop]: updatedError };
     }
 

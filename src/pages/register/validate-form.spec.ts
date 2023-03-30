@@ -54,4 +54,48 @@ describe("Register Page - Form", () => {
       expect(formValidateResponse.message).toBe(FormMessage.EmailAlreadyTaken);
     })
   });
+  describe("Input - Password", () => {
+    it("should pass if password is valid", async () => {
+      const passwordData = { key: "password", value: "ZezimPereira@123" };
+      const formValidateResponse = await validateForm(passwordData.key, passwordData.value);
+      expect(formValidateResponse.isValid).toBe(true);
+      expect(formValidateResponse.message).toBe("");
+    })
+    it("should return error if password is empty", async () => {
+      const passwordData = { key: "password", value: "" };
+      const formValidateResponse = await validateForm(passwordData.key, passwordData.value);
+      expect(formValidateResponse.isValid).toBe(false);
+      expect(formValidateResponse.message).toBe(FormMessage.RequiredField);
+    })
+    it("should return error if password does not have a number", async () => {
+      const passwordData = { key: "password", value: "zezimpereira" };
+      const formValidateResponse = await validateForm(passwordData.key, passwordData.value);
+      expect(formValidateResponse.isValid).toBe(false);
+      expect(formValidateResponse.message).toBe(FormMessage.PasswordNotValid);
+    })
+    it("should return error if password does not have a uppercase letter", async () => {
+      const passwordData = { key: "password", value: "zezimpereira123" };
+      const formValidateResponse = await validateForm(passwordData.key, passwordData.value);
+      expect(formValidateResponse.isValid).toBe(false);
+      expect(formValidateResponse.message).toBe(FormMessage.PasswordNotValid);
+    })
+    it("should return error if password does not have a lowercase letter", async () => {
+      const passwordData = { key: "password", value: "ZEZIMPEREIRA123" };
+      const formValidateResponse = await validateForm(passwordData.key, passwordData.value);
+      expect(formValidateResponse.isValid).toBe(false);
+      expect(formValidateResponse.message).toBe(FormMessage.PasswordNotValid);
+    })
+    it("should return error if password does not have special character !@#$%^&*", async () => {
+      const passwordData = { key: "password", value: "ZezimPereira123" };
+      const formValidateResponse = await validateForm(passwordData.key, passwordData.value);
+      expect(formValidateResponse.isValid).toBe(false);
+      expect(formValidateResponse.message).toBe(FormMessage.PasswordNotValid);
+    })
+    it("should return error if password is has less than 8 characters", async () => {
+      const passwordData = { key: "password", value: "ZEZIMPE" };
+      const formValidateResponse = await validateForm(passwordData.key, passwordData.value);
+      expect(formValidateResponse.isValid).toBe(false);
+      expect(formValidateResponse.message).toBe(FormMessage.PasswordNotValid);
+    })
+  })
 });

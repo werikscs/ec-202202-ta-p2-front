@@ -53,5 +53,26 @@ export default async function validateForm(
     }
   }
 
+  if (key === "password") {
+    /*
+      ^ indica o início da string.
+      (?=.*\d) especifica que a string deve conter pelo menos um dígito.
+      (?=.*[a-z]) especifica que a string deve conter pelo menos uma letra minúscula.
+      (?=.*[A-Z]) especifica que a string deve conter pelo menos uma letra maiúscula.
+      (?=.*[!@#$%^&*]) especifica que a string deve conter pelo menos um dos seguintes caracteres especiais: ! @ # $ % ^ & *.
+      .{8,} especifica que a string deve ter pelo menos 8 caracteres.
+      $ indica o final da string.
+    */
+
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+    const isPasswordValid = passwordRegex.test(value);
+
+    if (!isPasswordValid) {
+      error.isValid = false;
+      error.message = FormMessage.PasswordNotValid;
+      return error;
+    }
+  }
+
   return error;
 }
