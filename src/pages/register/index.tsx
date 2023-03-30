@@ -1,10 +1,15 @@
 import { FormEvent, useState } from "react";
-import { formErrorType, inputErrorType } from "./errorType";
+import { formErrorType } from "./errorType";
 import { registerType } from "./registerType";
 import { StyledForm, StyledMain } from "./styles";
+import { IUserAPI } from "../../api/types";
 import validateForm from "./validateForm";
 
-export function Register({}) {
+type IProp = {
+  userAPI: IUserAPI;
+};
+
+export function Register({ userAPI }: IProp) {
   const [registerData, setRegisterData] = useState<registerType>({
     nome: "",
     email: "",
@@ -58,20 +63,18 @@ export function Register({}) {
 
     setError({ ...auxError });
 
-    let hasErrors = false
+    let hasErrors = false;
 
     for (const prop in auxError) {
       if (!auxError[prop as keyof formErrorType].isValid) {
-        hasErrors = true
+        hasErrors = true;
       }
     }
 
-    if(!hasErrors){
-      console.log('deu bom')
-      // UserAPI.register(formJson);
+    if (!hasErrors) {
+      console.log("deu bom");
+      userAPI.register(formJson);
     }
-
-
   };
 
   return (
