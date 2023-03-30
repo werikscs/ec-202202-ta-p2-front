@@ -1,7 +1,14 @@
-import { IHttpClient } from '../types/types';
+import axios from "axios";
+import { IHttpClient } from "../types/types";
 
 export class AxiosHttpClient implements IHttpClient {
-  post(endpoint: string, input: any): Promise<any> {
-    throw new Error('Method not implemented.');
+  private axiosHttpClient;
+  constructor() {
+    this.axiosHttpClient = axios.create({
+      baseURL: process.env.BACKEND_API_URL,
+    });
+  }
+  async post(endpoint: string, input: any): Promise<any> {
+    this.axiosHttpClient.post(endpoint, input);
   }
 }

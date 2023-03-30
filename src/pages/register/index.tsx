@@ -72,7 +72,8 @@ export function Register({ userAPI }: IProp) {
     }
 
     if (!hasErrors) {
-      userAPI.register(formJson);
+      const { nome: name, email, password } = registerData;
+      userAPI.register({ name, email, password });
     }
   };
 
