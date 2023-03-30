@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
-import { formErrorType } from "./error-type";
-import { registerType } from "./register-type";
+import { registerUserErrorType } from "./register-error-type";
+import { registerUserType } from "./register-type";
 import { StyledForm, StyledMain } from "./styles";
 import { IUserAPI } from "../../api/types/types";
 import validateForm from "./validate-form";
@@ -10,13 +10,13 @@ type IProp = {
 };
 
 export function Register({ userAPI }: IProp) {
-  const [registerData, setRegisterData] = useState<registerType>({
+  const [registerData, setRegisterData] = useState<registerUserType>({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
-  const [error, setError] = useState<formErrorType>({
+  const [error, setError] = useState<registerUserErrorType>({
     name: { isValid: true, message: "" },
     email: { isValid: true, message: "" },
     password: { isValid: true, message: "" },
@@ -37,7 +37,7 @@ export function Register({ userAPI }: IProp) {
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
 
-    let auxError = error;
+    let tempError = error;
 
     for (const prop in formJson) {
       const updatedError = await validateForm(
@@ -46,13 +46,13 @@ export function Register({ userAPI }: IProp) {
         userAPI,
         registerData
       );
-      auxError = { ...auxError, [prop]: updatedError };
+      tempError = { ...tempError, [prop]: updatedError };
     }
 
-    setError({ ...auxError });
+    setError({ ...tempError });
 
-    for (const prop in auxError) {
-      if (!auxError[prop as keyof formErrorType].isValid) {
+    for (const prop in tempError) {
+      if (!tempError[prop as keyof registerUserErrorType].isValid) {
         return;
       }
     }

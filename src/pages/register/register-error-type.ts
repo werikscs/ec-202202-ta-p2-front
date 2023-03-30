@@ -1,10 +1,10 @@
-export type inputErrorType = { isValid: boolean; message: string };
+export type inputRegisterUserType = { isValid: boolean; message: string };
 
-export type formErrorType = {
-  name: inputErrorType;
-  email: inputErrorType;
-  password: inputErrorType;
-  confirmPassword: inputErrorType;
+export type registerUserErrorType = {
+  name: inputRegisterUserType;
+  email: inputRegisterUserType;
+  password: inputRegisterUserType;
+  confirmPassword: inputRegisterUserType;
 };
 
 export enum FormMessage {
