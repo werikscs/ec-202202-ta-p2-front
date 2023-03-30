@@ -1,5 +1,6 @@
 import { IUserAPI } from "../../api/types/types";
 import { FormMessage, inputErrorType } from "./error-type";
+import { registerType } from './register-type';
 
 type IProp = {
   userAPI: IUserAPI;
@@ -8,7 +9,8 @@ type IProp = {
 export default async function validateForm(
   key: string,
   value: string,
-  api?: IUserAPI
+  api?: IUserAPI,
+  registerData?: registerType,
 ): Promise<inputErrorType> {
   const formattedValue = value.trim();
   const error: inputErrorType = {
@@ -59,17 +61,25 @@ export default async function validateForm(
       (?=.*\d) especifica que a string deve conter pelo menos um dígito.
       (?=.*[a-z]) especifica que a string deve conter pelo menos uma letra minúscula.
       (?=.*[A-Z]) especifica que a string deve conter pelo menos uma letra maiúscula.
-      (?=.*[!@#$%^&*]) especifica que a string deve conter pelo menos um dos seguintes caracteres especiais: ! @ # $ % ^ & *.
+      (?=.*[!@#$%^&*_]) especifica que a string deve conter pelo menos um dos seguintes caracteres especiais: ! @ # $ % ^ & *.
       .{8,} especifica que a string deve ter pelo menos 8 caracteres.
       $ indica o final da string.
     */
 
-    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*_]).{8,}$/;
     const isPasswordValid = passwordRegex.test(value);
 
     if (!isPasswordValid) {
       error.isValid = false;
       error.message = FormMessage.PasswordNotValid;
+      return error;
+    }
+  }
+
+  if(key === "confirmPassword") {
+    if(registerData?.password !== value){
+      error.isValid = false;
+      error.message = FormMessage.PasswordsAreDifferent;
       return error;
     }
   }
