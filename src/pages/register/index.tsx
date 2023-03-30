@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { errorType } from "./errorType";
+import { formErrorType, inputErrorType } from "./errorType";
 import { registerType } from "./registerType";
 import { StyledForm, StyledMain } from "./styles";
 import validateForm from "./validateForm";
@@ -11,11 +11,11 @@ export function Register({}) {
     password: "",
     confirmPassword: "",
   });
-  const [error, setError] = useState<errorType>({
-    nome: { isValid: false, message: "" },
-    email: { isValid: false, message: "" },
-    password: { isValid: false, message: "" },
-    confirmPassword: { isValid: false, message: "" },
+  const [error, setError] = useState<formErrorType>({
+    nome: { isValid: true, message: "" },
+    email: { isValid: true, message: "" },
+    password: { isValid: true, message: "" },
+    confirmPassword: { isValid: true, message: "" },
   });
 
   const handleOnChange = (e: FormEvent, key: string) => {
@@ -23,23 +23,55 @@ export function Register({}) {
       ...registerData,
       [key]: (e.target as HTMLInputElement).value,
     });
-    const errorData = validateForm(key, e, registerData, error);
-    setError({ ...errorData });
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    for (const prop in error) {
-      if (!error[prop as keyof errorType].isValid) return;
-    }
-
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
-    console.log(formJson);
 
-    // RegisterUserAPI.register(formJson);
+    let auxError: formErrorType = {
+      nome: {
+        isValid: false,
+        message: "",
+      },
+      email: {
+        isValid: false,
+        message: "",
+      },
+      password: {
+        isValid: false,
+        message: "",
+      },
+      confirmPassword: {
+        isValid: false,
+        message: "",
+      },
+    };
+
+    for (const prop in formJson) {
+      const updatedError = validateForm(prop, formJson[prop] as string);
+      auxError = { ...auxError, [prop]: updatedError };
+    }
+
+    setError({ ...auxError });
+
+    let hasErrors = false
+
+    for (const prop in auxError) {
+      if (!auxError[prop as keyof formErrorType].isValid) {
+        hasErrors = true
+      }
+    }
+
+    if(!hasErrors){
+      console.log('deu bom')
+      // UserAPI.register(formJson);
+    }
+
+
   };
 
   return (
@@ -47,10 +79,7 @@ export function Register({}) {
       <header>
         <h1>Cadastre-se</h1>
       </header>
-      <StyledForm
-        className="form"
-        onSubmit={handleSubmit}
-      >
+      <StyledForm onSubmit={handleSubmit}>
         <label htmlFor="nome">
           <span>Nome</span>
           <input
@@ -58,7 +87,7 @@ export function Register({}) {
             name="nome"
             id="nome"
             data-testid="nome"
-            placeholder="Escreva um nome"
+            placeholder="Escreva seu nome"
             value={registerData.nome}
             onChange={(event) => handleOnChange(event, "nome")}
           />
@@ -73,7 +102,7 @@ export function Register({}) {
             name="email"
             id="email"
             data-testid="email"
-            placeholder="Escreva um email válido"
+            placeholder="Escreva seu email"
             value={registerData.email}
             onChange={(event) => handleOnChange(event, "email")}
           />
@@ -88,7 +117,7 @@ export function Register({}) {
             name="password"
             id="password"
             data-testid="password"
-            placeholder="Escreva uma senha"
+            placeholder="Escreva sua senha"
             value={registerData.password}
             onChange={(event) => handleOnChange(event, "password")}
           />
@@ -103,7 +132,7 @@ export function Register({}) {
             name="confirmPassword"
             id="confirmPassword"
             data-testid="confirmPassword"
-            placeholder="Escreva a mesma senha"
+            placeholder="Repita sua senha"
             value={registerData.confirmPassword}
             onChange={(event) => handleOnChange(event, "confirmPassword")}
           />
