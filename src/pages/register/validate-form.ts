@@ -1,6 +1,6 @@
 import { IUserAPI } from "../../api/types/types";
-import { FormMessage, inputErrorType } from "./error-type";
-import { registerType } from './register-type';
+import { FormMessage, inputRegisterUserType } from "./register-error-type";
+import { registerUserType } from './register-type';
 
 type IProp = {
   userAPI: IUserAPI;
@@ -10,10 +10,10 @@ export default async function validateForm(
   key: string,
   value: string,
   api?: IUserAPI,
-  registerData?: registerType,
-): Promise<inputErrorType> {
+  registerData?: registerUserType,
+): Promise<inputRegisterUserType> {
   
-  const tempError: inputErrorType = {
+  const tempError: inputRegisterUserType = {
     isValid: true,
     message: "",
   };

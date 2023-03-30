@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
-import { formErrorType } from "./error-type";
-import { registerType } from "./register-type";
+import { registerUserErrorType } from "./register-error-type";
+import { registerUserType } from "./register-type";
 import { StyledForm, StyledMain } from "./styles";
 import { IUserAPI } from "../../api/types/types";
 import validateForm from "./validate-form";
@@ -10,13 +10,13 @@ type IProp = {
 };
 
 export function Register({ userAPI }: IProp) {
-  const [registerData, setRegisterData] = useState<registerType>({
+  const [registerData, setRegisterData] = useState<registerUserType>({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
-  const [error, setError] = useState<formErrorType>({
+  const [error, setError] = useState<registerUserErrorType>({
     name: { isValid: true, message: "" },
     email: { isValid: true, message: "" },
     password: { isValid: true, message: "" },
@@ -52,7 +52,7 @@ export function Register({ userAPI }: IProp) {
     setError({ ...auxError });
 
     for (const prop in auxError) {
-      if (!auxError[prop as keyof formErrorType].isValid) {
+      if (!auxError[prop as keyof registerUserErrorType].isValid) {
         return;
       }
     }

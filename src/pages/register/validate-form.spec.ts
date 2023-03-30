@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import { IUserAPI } from "../../api/types/types";
 import { UserAPI } from "../../api/user-api";
 import { InMemoryAdapter } from "../../test/http-clients/inmemory-adapter";
-import { FormMessage } from "./error-type";
-import { registerType } from "./register-type";
+import { FormMessage } from "./register-error-type";
+import { inputRegisterUserType } from "./register-type";
 import validateForm from "./validate-form";
 
 describe("Register Page - Form", () => {
@@ -145,7 +145,7 @@ describe("Register Page - Form", () => {
   });
 
   describe("Input - Confirm Password", () => {
-    const fakeRegisterData: registerType = {
+    const fakeRegisterData: inputRegisterUserType = {
       name: "",
       email: "",
       password: "ZezimPereira@123",
