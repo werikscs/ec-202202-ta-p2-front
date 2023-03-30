@@ -5,7 +5,7 @@ export class AxiosHttpClient implements IHttpClient {
   private axiosHttpClient;
   constructor() {
     this.axiosHttpClient = axios.create({
-      baseURL: process.env.BACKEND_API_URL,
+      baseURL: import.meta.env.VITE_BACKEND_API_URL,
     });
   }
   async post(endpoint: string, input: any): Promise<any> {
