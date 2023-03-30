@@ -1,8 +1,13 @@
 export type inputErrorType = { isValid: boolean; message: string }
 
 export type formErrorType = {
-  nome: inputErrorType
+  name: inputErrorType
   email: inputErrorType
   password: inputErrorType
   confirmPassword: inputErrorType
 };
+
+export enum FormMessage {
+  RequiredField = "Campo obrigatório",
+  AtLeastTwoWords = "Nome deve ter no mínimo duas palavras"
+}

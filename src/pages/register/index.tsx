@@ -11,13 +11,13 @@ type IProp = {
 
 export function Register({ userAPI }: IProp) {
   const [registerData, setRegisterData] = useState<registerType>({
-    nome: "",
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
   const [error, setError] = useState<formErrorType>({
-    nome: { isValid: true, message: "" },
+    name: { isValid: true, message: "" },
     email: { isValid: true, message: "" },
     password: { isValid: true, message: "" },
     confirmPassword: { isValid: true, message: "" },
@@ -37,8 +37,10 @@ export function Register({ userAPI }: IProp) {
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
 
+    console.log(formJson)
+
     let auxError: formErrorType = {
-      nome: {
+      name: {
         isValid: false,
         message: "",
       },
@@ -72,7 +74,7 @@ export function Register({ userAPI }: IProp) {
     }
 
     if (!hasErrors) {
-      const { nome: name, email, password } = registerData;
+      const { name: name, email, password } = registerData;
       userAPI.register({ name, email, password });
     }
   };
@@ -84,18 +86,18 @@ export function Register({ userAPI }: IProp) {
       </header>
       <StyledForm onSubmit={handleSubmit}>
         <label htmlFor="nome">
-          <span>Nome</span>
+          <span>Nome Completo</span>
           <input
             type="text"
-            name="nome"
-            id="nome"
-            data-testid="nome"
-            placeholder="Escreva seu nome"
-            value={registerData.nome}
-            onChange={(event) => handleOnChange(event, "nome")}
+            name="name"
+            id="name"
+            data-testid="name"
+            placeholder="Escreva seu nome completo"
+            value={registerData.name}
+            onChange={(event) => handleOnChange(event, "name")}
           />
-          {!error.nome.isValid && (
-            <div className="form-error">{error.nome.message}</div>
+          {!error.name.isValid && (
+            <div className="form-error">{error.name.message}</div>
           )}
         </label>
         <label htmlFor="email">

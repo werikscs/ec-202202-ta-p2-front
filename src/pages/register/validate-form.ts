@@ -1,4 +1,4 @@
-import { inputErrorType } from "./error-type";
+import { FormMessage, inputErrorType } from "./error-type";
 
 export default function validateForm(
   key: string,
@@ -10,12 +10,28 @@ export default function validateForm(
     message: "",
   };
 
-  if (key === "nome") {
-    if (formattedValue.length < 2) {
+  if (key === "name") {
+    if(formattedValue.length === 0){
       error.isValid = false;
-      error.message = "Nome deve ter pelo menos dois caracteres";
+      error.message = FormMessage.RequiredField;
+      return error
     }
-    return error;
+
+    const splitedName = value.split(' ')
+
+    if(splitedName.length < 2){
+      error.isValid = false;
+      error.message = FormMessage.AtLeastTwoWords;
+      return error
+    }
+  }
+
+  if(key === "email"){
+    if(formattedValue.length === 0){
+      error.isValid = false;
+      error.message = "Campo obrigatório";
+      return error
+    }
   }
 
   return error;
