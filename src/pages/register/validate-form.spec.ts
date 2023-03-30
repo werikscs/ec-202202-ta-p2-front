@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { IUserAPI } from "../../api/types/types";
-import { UserAPI } from '../../api/user-api';
-import { InMemoryAdapter } from '../../test/http-clients/inmemory-adapter';
+import { UserAPI } from "../../api/user-api";
+import { InMemoryAdapter } from "../../test/http-clients/inmemory-adapter";
 import { FormMessage } from "./error-type";
 import { registerType } from "./register-type";
 import validateForm from "./validate-form";
@@ -153,7 +153,10 @@ describe("Register Page - Form", () => {
     };
 
     it("should pass if confirm password is equals password", async () => {
-      const passwordData = { key: "confirmPassword", value: "ZezimPereira@123" };
+      const passwordData = {
+        key: "confirmPassword",
+        value: "ZezimPereira@123",
+      };
       const formValidateResponse = await validateForm(
         passwordData.key,
         passwordData.value,
@@ -173,7 +176,9 @@ describe("Register Page - Form", () => {
         fakeRegisterData
       );
       expect(formValidateResponse.isValid).toBe(false);
-      expect(formValidateResponse.message).toBe(FormMessage.PasswordsAreDifferent);
+      expect(formValidateResponse.message).toBe(
+        FormMessage.PasswordsAreDifferent
+      );
     });
   });
 });

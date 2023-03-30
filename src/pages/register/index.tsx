@@ -57,7 +57,7 @@ export function Register({ userAPI }: IProp) {
       }
     }
 
-    const { name: name, email, password } = registerData;
+    const { name, email, password } = registerData;
     await userAPI.register({ name, email, password });
   };
 

@@ -12,46 +12,48 @@ export default async function validateForm(
   api?: IUserAPI,
   registerData?: registerType,
 ): Promise<inputErrorType> {
-  const formattedValue = value.trim();
-  const error: inputErrorType = {
+  
+  const tempError: inputErrorType = {
     isValid: true,
     message: "",
   };
+  
+  const formattedValue = value.trim();
 
   if (key) {
     if (formattedValue.length === 0) {
-      error.isValid = false;
-      error.message = FormMessage.RequiredField;
-      return error;
+      tempError.isValid = false;
+      tempError.message = FormMessage.RequiredField;
+      return tempError;
     }
   }
 
   if (key === "name") {
-    const splitedName = value.split(" ");
+    const splitedName = formattedValue.split(" ");
 
     if (splitedName.length < 2) {
-      error.isValid = false;
-      error.message = FormMessage.AtLeastTwoWords;
-      return error;
+      tempError.isValid = false;
+      tempError.message = FormMessage.AtLeastTwoWords;
+      return tempError;
     }
   }
 
   if (key === "email") {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    const isEmailValid = emailRegex.test(value);
+    const isEmailValid = emailRegex.test(formattedValue);
 
     if (!isEmailValid) {
-      error.isValid = false;
-      error.message = FormMessage.EmailNotValid;
-      return error;
+      tempError.isValid = false;
+      tempError.message = FormMessage.EmailNotValid;
+      return tempError;
     }
 
-    const emailAlreadyTaken = await api?.findUserByEmail(value);
+    const emailAlreadyTaken = await api?.findUserByEmail(formattedValue);
 
     if (emailAlreadyTaken) {
-      error.isValid = false;
-      error.message = FormMessage.EmailAlreadyTaken;
-      return error;
+      tempError.isValid = false;
+      tempError.message = FormMessage.EmailAlreadyTaken;
+      return tempError;
     }
   }
 
@@ -67,22 +69,22 @@ export default async function validateForm(
     */
 
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*_]).{8,}$/;
-    const isPasswordValid = passwordRegex.test(value);
+    const isPasswordValid = passwordRegex.test(formattedValue);
 
     if (!isPasswordValid) {
-      error.isValid = false;
-      error.message = FormMessage.PasswordNotValid;
-      return error;
+      tempError.isValid = false;
+      tempError.message = FormMessage.PasswordNotValid;
+      return tempError;
     }
   }
 
   if(key === "confirmPassword") {
-    if(registerData?.password !== value){
-      error.isValid = false;
-      error.message = FormMessage.PasswordsAreDifferent;
-      return error;
+    if(registerData?.password !== formattedValue){
+      tempError.isValid = false;
+      tempError.message = FormMessage.PasswordsAreDifferent;
+      return tempError;
     }
   }
 
-  return error;
+  return tempError;
 }
