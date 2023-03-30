@@ -1,12 +1,11 @@
 import { Routes, Route } from "react-router-dom";
-import { AxiosHttpClient } from "../api/http-clients/axios-http-client";
+import { UserAPI } from "../api/user-api";
 import { Register } from "../pages/register";
-import { UserAPIFake } from '../test/fake-api/user-api-fake';
-
-const axiosHttpClient = new AxiosHttpClient();
+import { InMemoryAdapter } from "../test/http-clients/inmemory-adapter";
 
 export const Router = () => {
-  const userAPI = new UserAPIFake(axiosHttpClient);
+  const httpClient = new InMemoryAdapter();
+  const userAPI = new UserAPI(httpClient);
   return (
     <Routes>
       <Route

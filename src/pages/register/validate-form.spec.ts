@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { AxiosHttpClient } from "../../api/http-clients/axios-http-client";
 import { IUserAPI } from "../../api/types/types";
-import { UserAPIFake } from "../../test/fake-api/user-api-fake";
+import { UserAPI } from '../../api/user-api';
+import { InMemoryAdapter } from '../../test/http-clients/inmemory-adapter';
 import { FormMessage } from "./error-type";
 import { registerType } from "./register-type";
 import validateForm from "./validate-form";
@@ -37,7 +37,7 @@ describe("Register Page - Form", () => {
     });
   });
   describe("Input - Email", () => {
-    const api: IUserAPI = new UserAPIFake(new AxiosHttpClient());
+    const api: IUserAPI = new UserAPI(new InMemoryAdapter());
 
     it("should pass if email is valid", async () => {
       const emailData = { key: "email", value: "zezim2@email.com" };

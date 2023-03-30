@@ -1,16 +1,27 @@
-import { IHttpClient, IUserAPI, registerUserInput, registerUserOutput } from './types/types';
+import {
+  IHttpClient,
+  IUserAPI,
+  loginUserInput,
+  loginUserOutput,
+  registerUserInput,
+  registerUserOutput,
+} from "./types/types";
 
 export class UserAPI implements IUserAPI {
   constructor(readonly httpClient: IHttpClient) {}
 
   async register(input: registerUserInput): Promise<registerUserOutput> {
-    const endpoint = "";
-    const response = await this.httpClient.post(endpoint, input);
-    const data = response.data;
-    return data;
+    const response = this.httpClient.post("/register", input);
+    return response;
   }
 
   async findUserByEmail(input: string): Promise<boolean> {
-    throw new Error('Method not implemented.');
+    const userFound = await this.httpClient.post("/findUserByEmail", input);
+    return Boolean(userFound);
+  }
+
+  async login(input: loginUserInput): Promise<loginUserOutput> {
+    const response = await this.httpClient.post("/login", input);
+    return response;
   }
 }

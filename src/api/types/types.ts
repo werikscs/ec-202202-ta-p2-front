@@ -1,10 +1,11 @@
 export interface IHttpClient {
-  post(endpoint: string, input: any): Promise<any>;
+  post(url: string, input: any): Promise<any>;
 }
 
 export interface IUserAPI {
   httpClient: IHttpClient;
   register(input: registerUserInput): Promise<registerUserOutput>;
+  login(input: loginUserInput): Promise<loginUserOutput>
   findUserByEmail(input: string): Promise<boolean>;
 }
 
@@ -19,3 +20,13 @@ export type registerUserOutput = {
   name: string;
   email: string;
 };
+
+export type loginUserInput = {
+  email: string
+  password: string
+}
+
+export type loginUserOutput = {
+  id: string
+  token: string
+}
