@@ -1,4 +1,4 @@
-import { IHttpClient } from './types';
+import { IHttpClient } from '../types/types';
 
 export class AxiosHttpClient implements IHttpClient {
   post(endpoint: string, input: any): Promise<any> {

@@ -1,4 +1,4 @@
-import { IHttpClient, IUserAPI } from './types';
+import { IHttpClient, IUserAPI } from './types/types';
 
 export class UserAPI implements IUserAPI {
   constructor(readonly httpClient: IHttpClient) {}

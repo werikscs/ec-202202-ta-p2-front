@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react";
 import { formErrorType } from "./error-type";
 import { registerType } from "./register-type";
 import { StyledForm, StyledMain } from "./styles";
-import { IUserAPI } from "../../api/types";
+import { IUserAPI } from "../../api/types/types";
 import validateForm from "./validate-form";
 
 type IProp = {
