@@ -1,9 +1,9 @@
 import { FormEvent, useState } from "react";
-import { formErrorType } from "./errorType";
-import { registerType } from "./registerType";
+import { formErrorType } from "./error-type";
+import { registerType } from "./register-type";
 import { StyledForm, StyledMain } from "./styles";
 import { IUserAPI } from "../../api/types";
-import validateForm from "./validateForm";
+import validateForm from "./validate-form";
 
 type IProp = {
   userAPI: IUserAPI;
@@ -72,7 +72,6 @@ export function Register({ userAPI }: IProp) {
     }
 
     if (!hasErrors) {
-      console.log("deu bom");
       userAPI.register(formJson);
     }
   };

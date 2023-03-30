@@ -1,4 +1,4 @@
-import { inputErrorType } from "./errorType";
+import { inputErrorType } from "./error-type";
 
 export default function validateForm(
   key: string,
