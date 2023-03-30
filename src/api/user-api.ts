@@ -9,4 +9,8 @@ export class UserAPI implements IUserAPI {
     const data = response.data;
     return data;
   }
+
+  async findUserByEmail(input: string): Promise<boolean> {
+    throw new Error('Method not implemented.');
+  }
 }

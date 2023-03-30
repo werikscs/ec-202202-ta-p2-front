@@ -30,14 +30,12 @@ export function Register({ userAPI }: IProp) {
     });
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
-
-    console.log(formJson)
 
     let auxError: formErrorType = {
       name: {
@@ -75,7 +73,7 @@ export function Register({ userAPI }: IProp) {
 
     if (!hasErrors) {
       const { name: name, email, password } = registerData;
-      userAPI.register({ name, email, password });
+      await userAPI.register({ name, email, password });
     }
   };
 
