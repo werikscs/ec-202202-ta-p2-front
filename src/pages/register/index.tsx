@@ -2,14 +2,15 @@ import { FormEvent, useState } from "react";
 import { registerUserErrorType } from "./register-error-type";
 import { registerUserType } from "./register-type";
 import { StyledForm, StyledMain } from "./styles";
-import { IUserAPI } from "../../api/types/types";
+import { IAuthAPI, IUserAPI } from "../../api/types";
 import validateForm from "./validate-form";
 
 type IProp = {
   userAPI: IUserAPI;
+  authAPI: IAuthAPI
 };
 
-export function Register({ userAPI }: IProp) {
+export function Register({ userAPI, authAPI }: IProp) {
   const [registerData, setRegisterData] = useState<registerUserType>({
     name: "",
     email: "",
@@ -58,7 +59,11 @@ export function Register({ userAPI }: IProp) {
     }
 
     const { name, email, password } = registerData;
-    await userAPI.register({ name, email, password });
+    try {
+      await authAPI.register({ name, email, password });
+    } catch (error) {
+      console.log('error');
+    }
   };
 
   return (

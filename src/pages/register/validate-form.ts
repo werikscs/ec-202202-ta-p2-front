@@ -1,4 +1,4 @@
-import { IUserAPI } from "../../api/types/types";
+import { IUserAPI } from "../../api/types";
 import { FormMessage, inputRegisterUserType } from "./register-error-type";
 import { registerUserType } from './register-type';
 

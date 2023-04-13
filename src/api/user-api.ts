@@ -5,23 +5,16 @@ import {
   loginUserOutput,
   registerUserInput,
   registerUserOutput,
-} from "./types/types";
+} from "./types";
 
 export class UserAPI implements IUserAPI {
-  constructor(readonly httpClient: IHttpClient) {}
-
-  async register(input: registerUserInput): Promise<registerUserOutput> {
-    const response = this.httpClient.post("/register", input);
-    return response;
-  }
+  constructor(readonly httpClient: IHttpClient, readonly subBaseURL: string) {}
 
   async findUserByEmail(input: string): Promise<boolean> {
-    const userFound = await this.httpClient.post("/findUserByEmail", input);
+    const userFound = await this.httpClient.post(
+      `${this.subBaseURL}/findUserByEmail`,
+      input
+    );
     return Boolean(userFound);
-  }
-
-  async login(input: loginUserInput): Promise<loginUserOutput> {
-    const response = await this.httpClient.post("/login", input);
-    return response;
   }
 }

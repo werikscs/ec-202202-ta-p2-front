@@ -4,9 +4,13 @@ export interface IHttpClient {
 
 export interface IUserAPI {
   httpClient: IHttpClient;
+  findUserByEmail(input: string): Promise<boolean>;
+}
+
+export interface IAuthAPI {
+  httpClient: IHttpClient;
   register(input: registerUserInput): Promise<registerUserOutput>;
   login(input: loginUserInput): Promise<loginUserOutput>
-  findUserByEmail(input: string): Promise<boolean>;
 }
 
 export type registerUserInput = {

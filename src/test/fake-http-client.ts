@@ -1,8 +1,8 @@
-import { IHttpClient } from "../../api/types/types";
-import { fakeUserDataBase } from "../fake-data/fake-user-database";
+import { IHttpClient } from "../api/types";
+import { fakeUserDataBase } from "./fake-data/fake-user-database";
 import { v4 as uuidv4 } from "uuid";
 
-export class InMemoryAdapter implements IHttpClient {
+export class FakeHttpClient implements IHttpClient {
   async post(url: string, input: any): Promise<any> {
     switch (url) {
       case "/register":

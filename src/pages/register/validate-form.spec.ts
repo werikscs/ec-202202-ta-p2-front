@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { IUserAPI } from "../../api/types/types";
+import { IUserAPI } from "../../api/types";
 import { UserAPI } from "../../api/user-api";
-import { InMemoryAdapter } from "../../test/http-clients/inmemory-adapter";
+import { FakeHttpClient } from "../../test/fake-http-client";
 import { FormMessage } from "./register-error-type";
 import { inputRegisterUserType } from "./register-type";
 import validateForm from "./validate-form";
@@ -37,7 +37,7 @@ describe("Register Page - Form", () => {
     });
   });
   describe("Input - Email", () => {
-    const api: IUserAPI = new UserAPI(new InMemoryAdapter());
+    const api: IUserAPI = new UserAPI(new FakeHttpClient());
 
     it("should pass if email is valid", async () => {
       const emailData = { key: "email", value: "zezim2@email.com" };
